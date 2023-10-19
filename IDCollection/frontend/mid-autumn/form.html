@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Mooncake Collection</title>
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0" />
+  </head>
+  <body>
+    <div class="box"> 
+      <img src="midautumn.jpg">
+      <div class="shade">
+        <form method="post" onsubmit="return sendRequest()">
+          <fieldset>
+            <h1>月饼发放</h1>
+            <label for="studentId">请输入学号: <input id="studentId" name="studentId" required /></label>
+            <input type="submit"></input>
+          </fieldset>
+        </form>
+      </div>
+    </div>  
+  </body>
+  <script>
+    const studentIdInput = document.getElementById("studentId");
+    function sendRequest() {
+      const studentID = studentIdInput.value;
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', `https://msss.umbrella-leaf.com/mooncake/register?studentId=${studentID}`, true);
+      xhr.onreadystatechange = function() {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          let responseText = xhr.responseText;
+          let response = JSON.parse(responseText);
+          let msg = response.msg;
+          alert(msg);
+          // 处理服务器返回结果
+        }
+      };
+      xhr.send();
+      return false;
+    }
+  </script>
+</html>
+
